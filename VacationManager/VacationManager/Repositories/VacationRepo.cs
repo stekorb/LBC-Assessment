@@ -87,5 +87,13 @@ namespace VacationManager.Repositories
 
             return false;
         }
+
+        public async Task<List<VacationModel>> RetrieveVacationsAwaitingReview(Guid managerId)
+        {
+            var managedEmployeesIds = await _dbContext.Employees.Where(e => e.ManagerId == managerId).Select(e => e.Id).ToListAsync();
+            var listDb = await _dbContext.Vacations.Where(v => v.Status == VacationStatusEnum.AwaitingApproval && managedEmployeesIds.Contains(v.Id)).ToListAsync();
+
+            return listDb;
+        }
     }
 }

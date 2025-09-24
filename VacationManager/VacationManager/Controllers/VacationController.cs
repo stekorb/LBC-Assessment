@@ -18,6 +18,7 @@ namespace VacationManager.Controllers
         private readonly IReviewVacationRequestSvc _reviewVacationRequestSvc;
         private readonly IUpdateVacationRequestSvc _updateVacationRequestSvc;
         private readonly IDeleteVacationSvc _deleteVacationSvc;
+        private readonly IRetrieveVacationsAwaitingReviewSvc _retrieveVacationsAwaitingReviewSvc;
 
         public VacationController(IRetrieveAllVacationsSvc retrieveAllVacationsSvc, 
                                   IRetrieveEmployeeVacationsSvc retrieveEmployeeVacationsSvc,
@@ -25,7 +26,8 @@ namespace VacationManager.Controllers
                                   IRegisterNewVacationSvc registerNewVacationSvc,
                                   IReviewVacationRequestSvc reviewVacationRequestSvc,
                                   IUpdateVacationRequestSvc updateVacationRequestSvc,
-                                  IDeleteVacationSvc deleteVacationSvc)
+                                  IDeleteVacationSvc deleteVacationSvc,
+                                  IRetrieveVacationsAwaitingReviewSvc retrieveVacationsAwaitingReviewSvc)
         {
             _retrieveAllVacationsSvc = retrieveAllVacationsSvc;
             _retrieveEmployeeVacationsSvc = retrieveEmployeeVacationsSvc;
@@ -34,6 +36,7 @@ namespace VacationManager.Controllers
             _reviewVacationRequestSvc = reviewVacationRequestSvc;
             _updateVacationRequestSvc = updateVacationRequestSvc;
             _deleteVacationSvc = deleteVacationSvc;
+            _retrieveVacationsAwaitingReviewSvc = retrieveVacationsAwaitingReviewSvc;
         }
 
         /// <summary>
@@ -75,6 +78,20 @@ namespace VacationManager.Controllers
         public async Task<IActionResult> RetrieveEmployeeVacation(Guid employeeId)
         {
             var result = await _retrieveEmployeeVacationsSvc.Execute(employeeId);
+            return ReturnResponse(result);
+        }
+
+        /// <summary>
+        /// Retrieves the list of vacations pending review.
+        /// </summary>
+        /// <param name="managerId">The manager employee unique identifier</param>
+        /// <returns></returns>
+        [HttpGet("review/{managerId}")]
+        [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetVacationsAwaitingReview(Guid managerId)
+        {
+            var result = await _retrieveVacationsAwaitingReviewSvc.Execute(managerId);
             return ReturnResponse(result);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VacationManager.Common.Enums;
 using VacationManager.Data;
 using VacationManager.Models;
 using VacationManager.Repositories.Interfaces;
@@ -73,6 +74,22 @@ namespace VacationManager.Repositories
             }
 
             return false;
+        }
+
+        public async Task<bool> IsEmployeeAdminOrManager(Guid employeeId)
+        {
+            var dbObj = await _dbContext.Employees.FirstOrDefaultAsync(emp => emp.Id == employeeId);
+            if(dbObj != null)
+            {
+                return dbObj.Role == RoleEnum.Manager || dbObj.Role == RoleEnum.Administrator;
+            }
+
+            return false;
+        }
+
+        public async Task<List<EmployeeModel>> RetrieveManagedEmployees(Guid managerId)
+        {
+            return await _dbContext.Employees.Where(emp => emp.ManagerId == managerId).ToListAsync();
         }
     }
 }

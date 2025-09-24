@@ -11,6 +11,7 @@ namespace VacationManager.Services.Startup
             services.AddScoped<ICreateEmployeeSvc, CreateEmployeeSvc>();
             services.AddScoped<IUpdateEmployeeSvc, UpdateEmployeeSvc>();
             services.AddScoped<IDeleteEmployeeSvc, DeleteEmployeeSvc>();
+            services.AddScoped<IRetrieveManagedEmployeesSvc, RetrieveManagedEmployeesSvc>();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace VacationManager.Repositories.Interfaces
         Task<bool> RegisterNewVacation(VacationModel model);
         Task<bool> UpdateVacation(VacationModel model);
         Task<bool> DeleteVacation(Guid vacationId);
+        Task<List<VacationModel>> RetrieveVacationsAwaitingReview(Guid managerId);
     }
 }

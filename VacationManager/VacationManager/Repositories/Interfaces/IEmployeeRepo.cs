@@ -15,5 +15,9 @@ namespace VacationManager.Repositories.Interfaces
         Task<bool> UpdateEmployee(EmployeeModel model);
 
         Task<bool> DeleteEmployee(Guid employeeId);
+
+        Task<bool> IsEmployeeAdminOrManager(Guid employeeId);
+
+        Task<List<EmployeeModel>> RetrieveManagedEmployees(Guid managerId);
     }
 }

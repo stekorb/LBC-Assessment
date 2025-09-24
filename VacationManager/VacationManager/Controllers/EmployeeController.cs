@@ -14,16 +14,18 @@ namespace VacationManager.Controllers
         private readonly ICreateEmployeeSvc _createEmployeeSvc;
         private readonly IUpdateEmployeeSvc _updateEmployeeSvc;
         private readonly IDeleteEmployeeSvc _deleteEmployeeSvc;
-
+        private readonly IRetrieveManagedEmployeesSvc _retrieveManagedEmployeesSvc;
         public EmployeeController(IRetrieveAllEmployeesSvc retrieveAllEmployeesSvc, 
                                   ICreateEmployeeSvc createEmployeeSvc,
                                   IUpdateEmployeeSvc updateEmployeeSvc,
-                                  IDeleteEmployeeSvc deleteEmployeeSvc)
+                                  IDeleteEmployeeSvc deleteEmployeeSvc,
+                                  IRetrieveManagedEmployeesSvc retrieveManagedEmployeesSvc)
         {
             _retrieveAllEmployeesSvc = retrieveAllEmployeesSvc;
             _createEmployeeSvc = createEmployeeSvc;
             _updateEmployeeSvc = updateEmployeeSvc;
             _deleteEmployeeSvc = deleteEmployeeSvc;
+            _retrieveManagedEmployeesSvc = retrieveManagedEmployeesSvc;
         }
 
         /// <summary>
@@ -36,6 +38,20 @@ namespace VacationManager.Controllers
         public async Task<IActionResult> RetrieveAllEmployees()
         {
             var result = await _retrieveAllEmployeesSvc.Execute();
+            return ReturnResponse(result);
+        }
+
+        /// <summary>
+        /// Retrieves all employees under the manager's.
+        /// </summary>
+        /// <param name="managerId">Manager's employee unique identifier</param>
+        /// <returns></returns>
+        [HttpGet("management/{managerId}")]
+        [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> RetrieveManagedEmployees(Guid managerId)
+        {
+            var result = await _retrieveManagedEmployeesSvc.Execute(managerId);
             return ReturnResponse(result);
         }
 
