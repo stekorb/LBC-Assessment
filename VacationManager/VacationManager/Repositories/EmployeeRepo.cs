@@ -51,10 +51,28 @@ namespace VacationManager.Repositories
                 dbObj.Email = model.Email;
                 dbObj.Role = model.Role;
                 dbObj.ManagerId = model.ManagerId;
+
+                await _dbContext.SaveChangesAsync();
+
+                return true;
             }
 
-            await _dbContext.SaveChangesAsync();
-            return true;
+            return false;
+        }
+
+        public async Task<bool> DeleteEmployee(Guid employeeId)
+        {
+            var dbObj = await _dbContext.Employees.FirstOrDefaultAsync(emp => emp.Id == employeeId);
+
+            if(dbObj != null)
+            {
+                _dbContext.Employees.Remove(dbObj);
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

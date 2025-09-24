@@ -55,7 +55,6 @@ namespace VacationManager.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EmployeeId")
@@ -63,20 +62,7 @@ namespace VacationManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
                     b.ToTable("Vacations");
-                });
-
-            modelBuilder.Entity("VacationManager.Models.VacationModel", b =>
-                {
-                    b.HasOne("VacationManager.Models.EmployeeModel", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

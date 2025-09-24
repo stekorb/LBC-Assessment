@@ -7,9 +7,10 @@ namespace VacationManager.Services.Startup
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IRetrieveAllEmployeesSvc, RetrieveAllEmployeesSvc>();
-            services.AddTransient<ICreateEmployeeSvc, CreateEmployeeSvc>();
-            services.AddTransient<IUpdateEmployeeSvc, UpdateEmployeeSvc>();
+            services.AddScoped<IRetrieveAllEmployeesSvc, RetrieveAllEmployeesSvc>();
+            services.AddScoped<ICreateEmployeeSvc, CreateEmployeeSvc>();
+            services.AddScoped<IUpdateEmployeeSvc, UpdateEmployeeSvc>();
+            services.AddScoped<IDeleteEmployeeSvc, DeleteEmployeeSvc>();
         }
     }
 }

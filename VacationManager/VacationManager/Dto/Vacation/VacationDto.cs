@@ -1,6 +1,6 @@
-﻿namespace VacationManager.Models
+﻿namespace VacationManager.Dto.Vacation
 {
-    public class VacationModel
+    public class VacationDto
     {
         public Guid Id { get; set; }
         public Guid EmployeeId { get; set; }

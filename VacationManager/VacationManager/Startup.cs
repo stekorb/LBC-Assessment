@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using VacationManager.Common.AutoMapper;
 using VacationManager.Common.Validators.Employee;
 using VacationManager.Data;
@@ -28,7 +29,13 @@ namespace VacationManager
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(swagger =>
+            {
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                swagger.IncludeXmlComments(xmlPath);
+            });
 
             services.AddAutoMapper(cfg =>
             {
@@ -41,9 +48,11 @@ namespace VacationManager
 
             //Service startups
             EmployeeServiceStartup.ConfigureServices(services);
+            VacationServiceStartup.ConfigureServices(services);
 
             //Repository startups
-            services.AddTransient<IEmployeeRepo, EmployeeRepo>();
+            services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            services.AddScoped<IVacationRepo, VacationRepo>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

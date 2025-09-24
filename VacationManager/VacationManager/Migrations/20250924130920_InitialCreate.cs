@@ -34,33 +34,22 @@ namespace VacationManager.Migrations
                     EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
                     DateStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     DateEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    Details = table.Column<string>(type: "TEXT", nullable: false)
+                    Details = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vacations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Vacations_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vacations_EmployeeId",
-                table: "Vacations",
-                column: "EmployeeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Vacations");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Vacations");
         }
     }
 }

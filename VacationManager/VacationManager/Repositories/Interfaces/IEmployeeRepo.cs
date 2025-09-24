@@ -13,5 +13,7 @@ namespace VacationManager.Repositories.Interfaces
         Task<bool> CreateEmployee(EmployeeModel model);
 
         Task<bool> UpdateEmployee(EmployeeModel model);
+
+        Task<bool> DeleteEmployee(Guid employeeId);
     }
 }

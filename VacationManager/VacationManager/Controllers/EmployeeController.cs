@@ -13,16 +13,23 @@ namespace VacationManager.Controllers
         private readonly IRetrieveAllEmployeesSvc _retrieveAllEmployeesSvc;
         private readonly ICreateEmployeeSvc _createEmployeeSvc;
         private readonly IUpdateEmployeeSvc _updateEmployeeSvc;
+        private readonly IDeleteEmployeeSvc _deleteEmployeeSvc;
 
         public EmployeeController(IRetrieveAllEmployeesSvc retrieveAllEmployeesSvc, 
                                   ICreateEmployeeSvc createEmployeeSvc,
-                                  IUpdateEmployeeSvc updateEmployeeSvc)
+                                  IUpdateEmployeeSvc updateEmployeeSvc,
+                                  IDeleteEmployeeSvc deleteEmployeeSvc)
         {
             _retrieveAllEmployeesSvc = retrieveAllEmployeesSvc;
             _createEmployeeSvc = createEmployeeSvc;
             _updateEmployeeSvc = updateEmployeeSvc;
+            _deleteEmployeeSvc = deleteEmployeeSvc;
         }
 
+        /// <summary>
+        /// Retrieves all employees.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
@@ -32,6 +39,11 @@ namespace VacationManager.Controllers
             return ReturnResponse(result);
         }
 
+        /// <summary>
+        /// Creates a new employee.
+        /// </summary>
+        /// <param name="dto">Employee object to be created</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
@@ -41,12 +53,31 @@ namespace VacationManager.Controllers
             return ReturnResponse(result);
         }
 
+        /// <summary>
+        /// Updates an existing employee.
+        /// </summary>
+        /// <param name="dto">Employee object to be updated</param>
+        /// <returns></returns>
         [HttpPatch]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateEmployee(EmployeeDto dto)
         {
             var result = await _updateEmployeeSvc.Execute(dto);
+            return ReturnResponse(result);
+        }
+
+        /// <summary>
+        /// Deletes an existing employee.
+        /// </summary>
+        /// <param name="employeeId">Employee unique identifier</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteEmployee(Guid employeeId)
+        {
+            var result = await _deleteEmployeeSvc.Execute(employeeId);
             return ReturnResponse(result);
         }
     }
