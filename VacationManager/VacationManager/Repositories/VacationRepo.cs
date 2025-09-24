@@ -27,7 +27,7 @@ namespace VacationManager.Repositories
             return result;
         }
 
-        public async Task<VacationModel> RetrieveVacation(Guid vacationId)
+        public async Task<VacationModel> RetrieveVacationById(Guid vacationId)
         {
             var result = await _dbContext.Vacations.FirstOrDefaultAsync(x => x.Id == vacationId);
             return result;

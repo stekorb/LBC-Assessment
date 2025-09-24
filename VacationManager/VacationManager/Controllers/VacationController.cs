@@ -17,13 +17,15 @@ namespace VacationManager.Controllers
         private readonly IRegisterNewVacationSvc _registerNewVacationSvc;
         private readonly IReviewVacationRequestSvc _reviewVacationRequestSvc;
         private readonly IUpdateVacationRequestSvc _updateVacationRequestSvc;
+        private readonly IDeleteVacationSvc _deleteVacationSvc;
 
         public VacationController(IRetrieveAllVacationsSvc retrieveAllVacationsSvc, 
                                   IRetrieveEmployeeVacationsSvc retrieveEmployeeVacationsSvc,
                                   IRetrieveVacationSvc retrieveVacationSvc,
                                   IRegisterNewVacationSvc registerNewVacationSvc,
                                   IReviewVacationRequestSvc reviewVacationRequestSvc,
-                                  IUpdateVacationRequestSvc updateVacationRequestSvc)
+                                  IUpdateVacationRequestSvc updateVacationRequestSvc,
+                                  IDeleteVacationSvc deleteVacationSvc)
         {
             _retrieveAllVacationsSvc = retrieveAllVacationsSvc;
             _retrieveEmployeeVacationsSvc = retrieveEmployeeVacationsSvc;
@@ -31,7 +33,7 @@ namespace VacationManager.Controllers
             _registerNewVacationSvc = registerNewVacationSvc;
             _reviewVacationRequestSvc = reviewVacationRequestSvc;
             _updateVacationRequestSvc = updateVacationRequestSvc;
-
+            _deleteVacationSvc = deleteVacationSvc;
         }
 
         /// <summary>
@@ -115,6 +117,20 @@ namespace VacationManager.Controllers
         public async Task<IActionResult> UpdateVacationRequest([FromBody] VacationDto dto)
         {
             var result = await _updateVacationRequestSvc.Execute(dto);
+            return ReturnResponse(result);
+        }
+
+        /// <summary>
+        /// Deletes an existing vacation.
+        /// </summary>
+        /// <param name="vacationId">Vacation unique identifier</param>
+        /// <returns></returns>
+        [HttpDelete("{vacationId}")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteVacation(Guid vacationId)
+        {
+            var result = await _deleteVacationSvc.Execute(vacationId);
             return ReturnResponse(result);
         }
     }

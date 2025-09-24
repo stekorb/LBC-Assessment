@@ -8,19 +8,14 @@ namespace VacationManager.Common.Enums
     public enum ReasonCodeEnum
     {
         #region Employee
-        [Description("Email must be unique.")]
         EmailNotUnique = 100,
-
-        [Description("ManagerId must already be registered to a manager.")]
         ManagerNotFound = 101,
-
-        [Description("Employee was not found.")]
         EmployeeNotFound = 102,
         #endregion
 
         #region Vacation
-        [Description("Vacation period is already booked for another.")]
-        VacationPeriodAlreadyBooked = 200
+        VacationPeriodAlreadyBooked = 200,
+        VacationNotFound = 201
         #endregion
 
     }

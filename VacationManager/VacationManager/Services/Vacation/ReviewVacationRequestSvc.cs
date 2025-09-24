@@ -20,7 +20,7 @@ namespace VacationManager.Services.Vacation
         {
             ResponseModel<bool> result = new ResponseModel<bool>();
 
-            var model = await _vacationRepo.RetrieveVacation(dto.Id);
+            var model = await _vacationRepo.RetrieveVacationById(dto.Id);
             model.Status = dto.ManagerDecision;
 
             result.Result = await _vacationRepo.UpdateVacation(model);

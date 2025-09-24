@@ -19,7 +19,7 @@ namespace VacationManager.Services.Vacation
         {
             ResponseModel<VacationDto> result = new ResponseModel<VacationDto>();
 
-            var model = await _vacationRepo.RetrieveVacation(vacationId);
+            var model = await _vacationRepo.RetrieveVacationById(vacationId);
             result.Result = _mapper.Map<VacationDto>(model);
 
             return result;

@@ -26,7 +26,7 @@ namespace VacationManager.Services.Vacation
                 return result;
             }
 
-            var model = await _vacationRepo.RetrieveVacation(dto.Id);
+            var model = await _vacationRepo.RetrieveVacationById(dto.Id);
 
             model.DateStart = dto.DateStart;
             model.DateEnd = dto.DateEnd;
