@@ -1,14 +1,10 @@
-﻿using VacationManager.Common.Enums;
-
-namespace VacationManager.Dto.Vacation
+﻿namespace VacationManager.Dto.Vacation
 {
-    public class VacationDto
+    public class VacationCreateDto
     {
-        public Guid Id { get; set; }
         public Guid EmployeeId { get; set; }
         public DateOnly DateStart { get; set; }
         public DateOnly DateEnd { get; set; }
         public string? Details { get; set; }
-        public VacationStatusEnum Status { get; set; }
     }
 }

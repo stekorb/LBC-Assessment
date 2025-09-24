@@ -15,6 +15,7 @@ namespace VacationManager.Common.AutoMapper
 
             //Vacation
             CreateMap<VacationModel, VacationDto>().ReverseMap();
+            CreateMap<VacationCreateDto, VacationModel>();
         }
     }
 }

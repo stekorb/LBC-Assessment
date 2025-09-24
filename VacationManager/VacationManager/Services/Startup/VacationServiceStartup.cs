@@ -8,6 +8,10 @@ namespace VacationManager.Services.Startup
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRetrieveAllVacationsSvc, RetrieveAllVacationsSvc>();
+            services.AddScoped<IRetrieveEmployeeVacationsSvc, RetrieveEmployeeVacationsSvc>();
+            services.AddScoped<IRetrieveVacationSvc, RetrieveVacationSvc>();
+            services.AddScoped<IRegisterNewVacationSvc, RegisterNewVacationSvc>();
+            services.AddScoped<IReviewVacationRequestSvc, ReviewVacationRequestSvc>();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace VacationManager.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateEmployee(EmployeeCreateDto dto)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeCreateDto dto)
         {
             var result = await _createEmployeeSvc.Execute(dto);
             return ReturnResponse(result);
@@ -61,7 +61,7 @@ namespace VacationManager.Controllers
         [HttpPatch]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> UpdateEmployee(EmployeeDto dto)
+        public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeDto dto)
         {
             var result = await _updateEmployeeSvc.Execute(dto);
             return ReturnResponse(result);
@@ -72,7 +72,7 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <param name="employeeId">Employee unique identifier</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{employeeId}")]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteEmployee(Guid employeeId)

@@ -1,4 +1,6 @@
-﻿namespace VacationManager.Models
+﻿using VacationManager.Common.Enums;
+
+namespace VacationManager.Models
 {
     public class VacationModel
     {
@@ -7,5 +9,6 @@
         public DateOnly DateStart { get; set; }
         public DateOnly DateEnd { get; set; }
         public string? Details { get; set; }
+        public VacationStatusEnum Status { get; set; }
     }
 }

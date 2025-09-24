@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using VacationManager.Common.AutoMapper;
 using VacationManager.Common.Validators.Employee;
 using VacationManager.Data;
@@ -27,7 +28,7 @@ namespace VacationManager
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite(connectionString));
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(swagger =>
             {
