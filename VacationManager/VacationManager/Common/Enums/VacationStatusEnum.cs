@@ -2,7 +2,7 @@
 {
     public enum VacationStatusEnum
     {
-        WaitingApproval,
+        AwaitingApproval,
         Approved,
         Rejected
     }

@@ -16,18 +16,22 @@ namespace VacationManager.Controllers
         private readonly IRetrieveVacationSvc _retrieveVacationSvc;
         private readonly IRegisterNewVacationSvc _registerNewVacationSvc;
         private readonly IReviewVacationRequestSvc _reviewVacationRequestSvc;
+        private readonly IUpdateVacationRequestSvc _updateVacationRequestSvc;
 
         public VacationController(IRetrieveAllVacationsSvc retrieveAllVacationsSvc, 
                                   IRetrieveEmployeeVacationsSvc retrieveEmployeeVacationsSvc,
                                   IRetrieveVacationSvc retrieveVacationSvc,
                                   IRegisterNewVacationSvc registerNewVacationSvc,
-                                  IReviewVacationRequestSvc reviewVacationRequestSvc)
+                                  IReviewVacationRequestSvc reviewVacationRequestSvc,
+                                  IUpdateVacationRequestSvc updateVacationRequestSvc)
         {
             _retrieveAllVacationsSvc = retrieveAllVacationsSvc;
             _retrieveEmployeeVacationsSvc = retrieveEmployeeVacationsSvc;
             _retrieveVacationSvc = retrieveVacationSvc;
             _registerNewVacationSvc = registerNewVacationSvc;
             _reviewVacationRequestSvc = reviewVacationRequestSvc;
+            _updateVacationRequestSvc = updateVacationRequestSvc;
+
         }
 
         /// <summary>
@@ -89,14 +93,28 @@ namespace VacationManager.Controllers
         /// <summary>
         /// Allows to approve or reject an existing vacation request awaiting for review.
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="dto">Vacation review object</param>
         /// <returns></returns>
-        [HttpPatch]
+        [HttpPatch("review")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ReviewVacationRequest([FromBody] VacationReviewDto dto)
         {
             var result = await _reviewVacationRequestSvc.Execute(dto);
+            return ReturnResponse(result);
+        }
+
+        /// <summary>
+        /// Updates the vacation.
+        /// </summary>
+        /// <param name="dto">Vacation object</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> UpdateVacationRequest([FromBody] VacationDto dto)
+        {
+            var result = await _updateVacationRequestSvc.Execute(dto);
             return ReturnResponse(result);
         }
     }

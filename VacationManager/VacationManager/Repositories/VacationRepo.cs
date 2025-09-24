@@ -33,9 +33,16 @@ namespace VacationManager.Repositories
             return result;
         }
 
-        public async Task<bool> IsVacationPeriodAlreadyBooked(DateOnly start, DateOnly end)
+        public async Task<bool> IsVacationPeriodAlreadyBooked(DateOnly start, DateOnly end, Guid? excludeVacationId = null)
         {
-            var result = await _dbContext.Vacations.AnyAsync(x => x.Status == VacationStatusEnum.Approved && start <= x.DateEnd && x.DateStart <= end);
+            var query = _dbContext.Vacations.Where(x => x.Status == VacationStatusEnum.Approved && start <= x.DateEnd && x.DateStart <= end);
+
+            if(excludeVacationId.HasValue)
+            {
+                query.Where(x => x.Id != excludeVacationId);
+            }
+
+            var result = await query.AnyAsync();
             return result;
         }
 
@@ -58,6 +65,21 @@ namespace VacationManager.Repositories
                 dbObj.Details = model.Details;
                 dbObj.Status = model.Status;
 
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteVacation(Guid vacationId)
+        {
+            var dbObj = await _dbContext.Vacations.FirstOrDefaultAsync(x => x.Id == vacationId);
+
+            if (dbObj != null)
+            {
+                _dbContext.Vacations.Remove(dbObj);
                 await _dbContext.SaveChangesAsync();
 
                 return true;

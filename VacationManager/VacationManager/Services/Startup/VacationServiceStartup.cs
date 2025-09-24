@@ -12,6 +12,7 @@ namespace VacationManager.Services.Startup
             services.AddScoped<IRetrieveVacationSvc, RetrieveVacationSvc>();
             services.AddScoped<IRegisterNewVacationSvc, RegisterNewVacationSvc>();
             services.AddScoped<IReviewVacationRequestSvc, ReviewVacationRequestSvc>();
+            services.AddScoped<IUpdateVacationRequestSvc, UpdateVacationRequestSvc>();
         }
     }
 }
