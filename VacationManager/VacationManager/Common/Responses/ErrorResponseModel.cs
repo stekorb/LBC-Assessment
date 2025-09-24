@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using VacationManager.Common.Enums;
+﻿using VacationManager.Common.Enums;
 
 namespace VacationManager.Common.Responses
 {
@@ -9,10 +8,10 @@ namespace VacationManager.Common.Responses
         public string Message => TranslateErrorCode(ReasonCode);
 
 
-        private readonly ErrorCodeTranslation _translation;
+        private readonly ReasonCodeTranslation _translation;
         public ErrorResponseModel()
         {
-            _translation = new ErrorCodeTranslation();
+            _translation = new ReasonCodeTranslation();
         }
 
         protected string TranslateErrorCode(ReasonCodeEnum reasonCode)

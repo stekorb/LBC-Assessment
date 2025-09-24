@@ -1,4 +1,5 @@
-﻿using VacationManager.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using VacationManager.Data;
 using VacationManager.Models;
 using VacationManager.Repositories.Interfaces;
 
@@ -13,29 +14,29 @@ namespace VacationManager.Repositories
             _dbContext = dbContext;
         }
 
-        public List<EmployeeModel> RetrieveAllEmployees()
+        public async Task<List<EmployeeModel>> RetrieveAllEmployees()
         {
-            var list = _dbContext.Employees.ToList();
+            var list = await _dbContext.Employees.ToListAsync();
 
             return list;
         }
 
-        public EmployeeModel RetrieveEmployeeById(Guid employeeId)
+        public async Task<EmployeeModel> RetrieveEmployeeById(Guid employeeId)
         {
-            var dbObj = _dbContext.Employees.FirstOrDefault(emp => emp.Id == employeeId);
+            var dbObj = await _dbContext.Employees.FirstOrDefaultAsync(emp => emp.Id == employeeId);
             return dbObj;
         }
 
-        public EmployeeModel RetrieveEmployeeByEmail(string email)
+        public async Task<EmployeeModel> RetrieveEmployeeByEmail(string email)
         {
-            var dbObj = _dbContext.Employees.FirstOrDefault(emp => emp.Email == email);
+            var dbObj = await _dbContext.Employees.FirstOrDefaultAsync(emp => emp.Email == email);
             return dbObj;
         }
 
-        public bool CreateEmployee(EmployeeModel model)
+        public async Task<bool> CreateEmployee(EmployeeModel model)
         {
             _dbContext.Employees.Add(model);
-            _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return true;
         }

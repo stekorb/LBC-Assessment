@@ -2,15 +2,16 @@
 
 namespace VacationManager.Common
 {
-    public class ErrorCodeTranslation
+    public class ReasonCodeTranslation
     {
         public Dictionary<ReasonCodeEnum, string> Dictionary;
 
-        public ErrorCodeTranslation()
+        public ReasonCodeTranslation()
         {
             Dictionary = new Dictionary<ReasonCodeEnum, string>
             {
-                { ReasonCodeEnum.EmailNotUnique, "Email already registered." }
+                { ReasonCodeEnum.EmailNotUnique, "Email must be unique." },
+                { ReasonCodeEnum.ManagerNotFound, "ManagerEmail must already be registered to a manager." }
             };
         }
 

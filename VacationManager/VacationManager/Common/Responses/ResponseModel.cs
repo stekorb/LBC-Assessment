@@ -1,11 +1,10 @@
-﻿using System.Runtime.CompilerServices;
-using VacationManager.Common.Enums;
+﻿using VacationManager.Common.Enums;
 
 namespace VacationManager.Common.Responses
 {
     public class ResponseModel<T>
     {
-        public T Result { get; set; }
+        public T? Result { get; set; }
         public List<ErrorResponseModel> Errors { get; set; }
         public bool HasErrors => Errors.Any();
 
@@ -17,6 +16,7 @@ namespace VacationManager.Common.Responses
         public ResponseModel(T result)
         {
             Result = result;
+            Errors = new();
         }
 
         public void AddError(ReasonCodeEnum reasonCode)

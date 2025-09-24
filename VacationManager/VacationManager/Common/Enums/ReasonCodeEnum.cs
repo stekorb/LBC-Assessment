@@ -4,6 +4,7 @@
     {
         //Employee
         EmailNotUnique = 0,
+        ManagerNotFound = 1,
 
     }
 }

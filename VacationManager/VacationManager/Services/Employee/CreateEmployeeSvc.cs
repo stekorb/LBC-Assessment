@@ -17,19 +17,29 @@ namespace VacationManager.Services.Employee
             _employeeRepo = employeeRepo;
         }
 
-        public ResponseModel<bool> Execute(EmployeeCreateDto dto)
+        public async Task<ResponseModel<bool>> Execute(EmployeeCreateDto dto)
         {
             ResponseModel<bool> result = new ResponseModel<bool>();
 
-            if(_employeeRepo.RetrieveEmployeeByEmail(dto.Email) != null)
+            if(await _employeeRepo.RetrieveEmployeeByEmail(dto.Email) != null)
             {
                 result.AddError(ReasonCodeEnum.EmailNotUnique);
-                return result;
             }
 
-            var model = _mapper.Map<EmployeeModel>(dto);
+            if(dto.ManagerId.HasValue)
+            {
+                var manager = await _employeeRepo.RetrieveEmployeeById(dto.ManagerId.Value);
+                if(manager == null)
+                {
+                    result.AddError(ReasonCodeEnum.ManagerNotFound);
+                }
+            }
 
-            result.Result = _employeeRepo.CreateEmployee(model);
+            if (!result.HasErrors)
+            {
+                var model = _mapper.Map<EmployeeModel>(dto);
+                result.Result = await _employeeRepo.CreateEmployee(model);
+            }
 
             return result;
         }

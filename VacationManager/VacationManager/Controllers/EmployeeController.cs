@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
 using VacationManager.Services.Interfaces;
@@ -7,7 +8,7 @@ namespace VacationManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeController
+    public class EmployeeController : BaseController
     {
         private readonly IRetrieveAllEmployeesSvc _retrieveAllEmployeesSvc;
         private readonly ICreateEmployeeSvc _createEmployeeSvc;
@@ -18,16 +19,21 @@ namespace VacationManager.Controllers
         }
 
         [HttpGet]
-        public ResponseModel<List<EmployeeDto>> RetrieveAllEmployees()
+        [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> RetrieveAllEmployees()
         {
-            var result = _retrieveAllEmployeesSvc.Execute();
-            return result;
+            var result = await _retrieveAllEmployeesSvc.Execute();
+            return ReturnResponse(result);
         }
 
         [HttpPost]
-        public ResponseModel<bool> CreateEmployee(EmployeeCreateDto dto)
+        [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateEmployee(EmployeeCreateDto dto)
         {
-            return _createEmployeeSvc.Execute(dto);
+            var result = await _createEmployeeSvc.Execute(dto);
+            return ReturnResponse(result);
         }
     }
 }

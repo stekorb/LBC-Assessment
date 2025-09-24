@@ -5,6 +5,6 @@ namespace VacationManager.Services.Interfaces
 {
     public interface ICreateEmployeeSvc
     {
-        ResponseModel<bool> Execute(EmployeeCreateDto model);
+        Task<ResponseModel<bool>> Execute(EmployeeCreateDto model);
     }
 }

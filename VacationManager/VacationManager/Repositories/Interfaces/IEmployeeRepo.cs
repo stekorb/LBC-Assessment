@@ -4,12 +4,12 @@ namespace VacationManager.Repositories.Interfaces
 {
     public interface IEmployeeRepo
     {
-        EmployeeModel RetrieveEmployeeById(Guid employeeId);
+        Task<EmployeeModel> RetrieveEmployeeById(Guid employeeId);
 
-        EmployeeModel RetrieveEmployeeByEmail(string email);
+        Task<EmployeeModel> RetrieveEmployeeByEmail(string email);
 
-        List<EmployeeModel> RetrieveAllEmployees();
+        Task<List<EmployeeModel>> RetrieveAllEmployees();
 
-        bool CreateEmployee(EmployeeModel model);
+        Task<bool> CreateEmployee(EmployeeModel model);
     }
 }

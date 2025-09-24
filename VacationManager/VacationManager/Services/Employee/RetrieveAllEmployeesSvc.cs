@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
-using VacationManager.Models;
 using VacationManager.Repositories.Interfaces;
 using VacationManager.Services.Interfaces;
 
@@ -16,10 +15,11 @@ namespace VacationManager.Services.Employee
             _employeeRepo = employeeRepo;
         }
 
-        public ResponseModel<List<EmployeeDto>> Execute()
+        public async Task<ResponseModel<List<EmployeeDto>>> Execute()
         {
-            var result = new ResponseModel<List<EmployeeDto>>();
-            var model = _employeeRepo.RetrieveAllEmployees();
+            ResponseModel<List<EmployeeDto>> result = new ResponseModel<List<EmployeeDto>>();
+
+            var model = await _employeeRepo.RetrieveAllEmployees();
 
             result.Result = _mapper.Map<List<EmployeeDto>>(model);
 

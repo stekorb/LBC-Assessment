@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using VacationManager.Common.AutoMapper;
+using VacationManager.Common.Validators.Employee;
 using VacationManager.Data;
 using VacationManager.Repositories;
 using VacationManager.Repositories.Interfaces;
@@ -32,6 +35,10 @@ namespace VacationManager
                 cfg.AddProfile<MappingProfile>();
             });
 
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<EmployeeCreateDtoValidator>();
+
             //Service startups
             EmployeeServiceStartup.ConfigureServices(services);
 
@@ -39,7 +46,7 @@ namespace VacationManager
             services.AddTransient<IEmployeeRepo, EmployeeRepo>();
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
