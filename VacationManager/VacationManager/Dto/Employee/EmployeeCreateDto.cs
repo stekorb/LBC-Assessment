@@ -9,6 +9,8 @@ namespace VacationManager.Dto.Employee
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
         public RoleEnum Role { get; set; }
         public Guid? ManagerId { get; set; }
     }

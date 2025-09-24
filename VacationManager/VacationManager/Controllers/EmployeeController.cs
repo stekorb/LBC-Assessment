@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using VacationManager.Common.Enums;
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
 using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class EmployeeController : BaseController
@@ -33,6 +36,7 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveAllEmployees()
@@ -47,6 +51,8 @@ namespace VacationManager.Controllers
         /// <param name="managerId">Manager's employee unique identifier</param>
         /// <returns></returns>
         [HttpGet("management/{managerId}")]
+        [Authorize(Roles = nameof(RoleEnum.Manager))]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveManagedEmployees(Guid managerId)
@@ -61,6 +67,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Employee object to be created</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeCreateDto dto)
@@ -75,6 +82,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Employee object to be updated</param>
         /// <returns></returns>
         [HttpPatch]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeDto dto)
@@ -89,6 +97,7 @@ namespace VacationManager.Controllers
         /// <param name="employeeId">Employee unique identifier</param>
         /// <returns></returns>
         [HttpDelete("{employeeId}")]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteEmployee(Guid employeeId)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using VacationManager.Common.Enums;
 using VacationManager.Common.Responses;
@@ -7,6 +8,7 @@ using VacationManager.Services.Interfaces.Vacation;
 
 namespace VacationManager.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class VacationController : BaseController
@@ -44,6 +46,7 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveAllEmployees()
@@ -58,6 +61,7 @@ namespace VacationManager.Controllers
         /// <param name="vacationId">Vacation unique identifier</param>
         /// <returns></returns>
         [HttpGet("{vacationId}")]
+        [Authorize]
         [ProducesResponseType(typeof(VacationDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveVacation(Guid vacationId)
@@ -73,6 +77,7 @@ namespace VacationManager.Controllers
         /// <param name="employeeId">Employee unique identifier</param>
         /// <returns></returns>
         [HttpGet("employee/{employeeId}")]
+        [Authorize]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveEmployeeVacation(Guid employeeId)
@@ -87,6 +92,8 @@ namespace VacationManager.Controllers
         /// <param name="managerId">The manager employee unique identifier</param>
         /// <returns></returns>
         [HttpGet("review/{managerId}")]
+        [Authorize(Roles = nameof(RoleEnum.Manager))]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetVacationsAwaitingReview(Guid managerId)
@@ -101,6 +108,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Vacation object to be created</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RegisterNewVacation([FromBody] VacationCreateDto dto)
@@ -115,6 +123,8 @@ namespace VacationManager.Controllers
         /// <param name="dto">Vacation review object</param>
         /// <returns></returns>
         [HttpPatch("review")]
+        [Authorize(Roles = nameof(RoleEnum.Manager))]
+        [Authorize(Roles = nameof(RoleEnum.Administrator))]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ReviewVacationRequest([FromBody] VacationReviewDto dto)
@@ -129,6 +139,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Vacation object</param>
         /// <returns></returns>
         [HttpPatch]
+        [Authorize]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateVacationRequest([FromBody] VacationDto dto)
@@ -143,6 +154,7 @@ namespace VacationManager.Controllers
         /// <param name="vacationId">Vacation unique identifier</param>
         /// <returns></returns>
         [HttpDelete("{vacationId}")]
+        [Authorize]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteVacation(Guid vacationId)
