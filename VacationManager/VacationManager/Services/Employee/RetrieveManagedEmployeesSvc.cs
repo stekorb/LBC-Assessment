@@ -19,7 +19,7 @@ namespace VacationManager.Services.Employee
         {
             ResponseModel<List<EmployeeDto>> result = new ResponseModel<List<EmployeeDto>>();
 
-            var model = await _employeeRepo.RetrieveEmployeeById(managerId);
+            var model = await _employeeRepo.RetrieveManagedEmployees(managerId);
             result.Result = _mapper.Map<List<EmployeeDto>>(model);
 
             return result;

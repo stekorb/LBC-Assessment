@@ -51,8 +51,7 @@ namespace VacationManager.Controllers
         /// <param name="managerId">Manager's employee unique identifier</param>
         /// <returns></returns>
         [HttpGet("management/{managerId}")]
-        [Authorize(Roles = nameof(RoleEnum.Manager))]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = $"{Roles.Manager}, {Roles.Administrator}")]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveManagedEmployees(Guid managerId)
