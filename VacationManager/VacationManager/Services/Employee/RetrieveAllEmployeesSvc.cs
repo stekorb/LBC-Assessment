@@ -2,7 +2,7 @@
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
 using VacationManager.Repositories.Interfaces;
-using VacationManager.Services.Interfaces;
+using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Services.Employee
 {

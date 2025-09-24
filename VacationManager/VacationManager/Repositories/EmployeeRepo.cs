@@ -40,5 +40,21 @@ namespace VacationManager.Repositories
 
             return true;
         }
+
+        public async Task<bool> UpdateEmployee(EmployeeModel model)
+        {
+            var dbObj = await _dbContext.Employees.FirstOrDefaultAsync(emp => emp.Id == model.Id);
+
+            if(dbObj != null)
+            {
+                dbObj.Name = model.Name;
+                dbObj.Email = model.Email;
+                dbObj.Role = model.Role;
+                dbObj.ManagerId = model.ManagerId;
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

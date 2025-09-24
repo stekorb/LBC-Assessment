@@ -11,7 +11,8 @@ namespace VacationManager.Common
             Dictionary = new Dictionary<ReasonCodeEnum, string>
             {
                 { ReasonCodeEnum.EmailNotUnique, "Email must be unique." },
-                { ReasonCodeEnum.ManagerNotFound, "ManagerEmail must already be registered to a manager." }
+                { ReasonCodeEnum.ManagerNotFound, "ManagerEmail must already be registered to a manager." },
+                { ReasonCodeEnum.EmployeeNotFound, "Employee not found." },
             };
         }
 

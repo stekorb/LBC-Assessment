@@ -11,5 +11,7 @@ namespace VacationManager.Repositories.Interfaces
         Task<List<EmployeeModel>> RetrieveAllEmployees();
 
         Task<bool> CreateEmployee(EmployeeModel model);
+
+        Task<bool> UpdateEmployee(EmployeeModel model);
     }
 }

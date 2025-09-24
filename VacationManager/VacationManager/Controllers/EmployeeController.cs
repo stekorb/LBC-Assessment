@@ -2,7 +2,7 @@
 using System.Net;
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
-using VacationManager.Services.Interfaces;
+using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Controllers
 {
@@ -12,10 +12,15 @@ namespace VacationManager.Controllers
     {
         private readonly IRetrieveAllEmployeesSvc _retrieveAllEmployeesSvc;
         private readonly ICreateEmployeeSvc _createEmployeeSvc;
-        public EmployeeController(IRetrieveAllEmployeesSvc retrieveAllEmployeesSvc, ICreateEmployeeSvc createEmployeeSvc)
+        private readonly IUpdateEmployeeSvc _updateEmployeeSvc;
+
+        public EmployeeController(IRetrieveAllEmployeesSvc retrieveAllEmployeesSvc, 
+                                  ICreateEmployeeSvc createEmployeeSvc,
+                                  IUpdateEmployeeSvc updateEmployeeSvc)
         {
             _retrieveAllEmployeesSvc = retrieveAllEmployeesSvc;
             _createEmployeeSvc = createEmployeeSvc;
+            _updateEmployeeSvc = updateEmployeeSvc;
         }
 
         [HttpGet]
@@ -33,6 +38,15 @@ namespace VacationManager.Controllers
         public async Task<IActionResult> CreateEmployee(EmployeeCreateDto dto)
         {
             var result = await _createEmployeeSvc.Execute(dto);
+            return ReturnResponse(result);
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> UpdateEmployee(EmployeeDto dto)
+        {
+            var result = await _updateEmployeeSvc.Execute(dto);
             return ReturnResponse(result);
         }
     }

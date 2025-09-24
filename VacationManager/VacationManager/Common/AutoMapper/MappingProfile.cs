@@ -10,7 +10,7 @@ namespace VacationManager.Common.AutoMapper
         {
             //Employee
             CreateMap<EmployeeCreateDto, EmployeeModel>();
-            CreateMap<EmployeeModel, EmployeeDto>();
+            CreateMap<EmployeeModel, EmployeeDto>().ReverseMap();
         }
     }
 }

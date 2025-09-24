@@ -5,6 +5,7 @@
         //Employee
         EmailNotUnique = 0,
         ManagerNotFound = 1,
+        EmployeeNotFound = 2,
 
     }
 }

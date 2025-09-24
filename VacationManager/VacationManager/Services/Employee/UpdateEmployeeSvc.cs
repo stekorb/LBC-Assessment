@@ -8,28 +8,36 @@ using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Services.Employee
 {
-    public class CreateEmployeeSvc : BaseService, ICreateEmployeeSvc
+    public class UpdateEmployeeSvc : BaseService, IUpdateEmployeeSvc
     {
         private readonly IEmployeeRepo _employeeRepo;
 
-        public CreateEmployeeSvc(IEmployeeRepo employeeRepo, IMapper mapper) : base(mapper)
+        public UpdateEmployeeSvc(IEmployeeRepo employeeRepo, IMapper mapper) : base(mapper)
         {
             _employeeRepo = employeeRepo;
         }
 
-        public async Task<ResponseModel<bool>> Execute(EmployeeCreateDto dto)
+        public async Task<ResponseModel<bool>> Execute(EmployeeDto dto)
         {
             ResponseModel<bool> result = new ResponseModel<bool>();
 
-            if(await _employeeRepo.RetrieveEmployeeByEmail(dto.Email) != null)
+            var employeeDb = await _employeeRepo.RetrieveEmployeeById(dto.Id);
+            if (employeeDb == null)
+            {
+                result.AddError(ReasonCodeEnum.EmployeeNotFound);
+                return result;
+            }
+
+            var emailValidation = await _employeeRepo.RetrieveEmployeeByEmail(dto.Email);
+            if (emailValidation != null && emailValidation.Id != dto.Id)
             {
                 result.AddError(ReasonCodeEnum.EmailNotUnique);
             }
 
-            if(dto.ManagerId.HasValue)
+            if (dto.ManagerId.HasValue)
             {
                 var manager = await _employeeRepo.RetrieveEmployeeById(dto.ManagerId.Value);
-                if(manager == null)
+                if (manager == null)
                 {
                     result.AddError(ReasonCodeEnum.ManagerNotFound);
                 }
@@ -38,7 +46,7 @@ namespace VacationManager.Services.Employee
             if (!result.HasErrors)
             {
                 var model = _mapper.Map<EmployeeModel>(dto);
-                result.Result = await _employeeRepo.CreateEmployee(model);
+                result.Result = await _employeeRepo.UpdateEmployee(model);
             }
 
             return result;

@@ -1,5 +1,5 @@
 ﻿using VacationManager.Services.Employee;
-using VacationManager.Services.Interfaces;
+using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Services.Startup
 {
@@ -9,6 +9,7 @@ namespace VacationManager.Services.Startup
         {
             services.AddTransient<IRetrieveAllEmployeesSvc, RetrieveAllEmployeesSvc>();
             services.AddTransient<ICreateEmployeeSvc, CreateEmployeeSvc>();
+            services.AddTransient<IUpdateEmployeeSvc, UpdateEmployeeSvc>();
         }
     }
 }
