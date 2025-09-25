@@ -46,7 +46,7 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveAllEmployees()
@@ -92,8 +92,7 @@ namespace VacationManager.Controllers
         /// <param name="managerId">The manager employee unique identifier</param>
         /// <returns></returns>
         [HttpGet("review/{managerId}")]
-        [Authorize(Roles = nameof(RoleEnum.Manager))]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = $"{Roles.Manager},{Roles.Administrator}")]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetVacationsAwaitingReview(Guid managerId)
@@ -123,8 +122,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Vacation review object</param>
         /// <returns></returns>
         [HttpPatch("review")]
-        [Authorize(Roles = nameof(RoleEnum.Manager))]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = $"{Roles.Manager},{Roles.Administrator}")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ReviewVacationRequest([FromBody] VacationReviewDto dto)

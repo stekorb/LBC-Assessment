@@ -36,7 +36,7 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> RetrieveAllEmployees()
@@ -66,7 +66,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Employee object to be created</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeCreateDto dto)
@@ -81,7 +81,7 @@ namespace VacationManager.Controllers
         /// <param name="dto">Employee object to be updated</param>
         /// <returns></returns>
         [HttpPatch]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeDto dto)
@@ -96,7 +96,7 @@ namespace VacationManager.Controllers
         /// <param name="employeeId">Employee unique identifier</param>
         /// <returns></returns>
         [HttpDelete("{employeeId}")]
-        [Authorize(Roles = nameof(RoleEnum.Administrator))]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(typeof(List<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteEmployee(Guid employeeId)
