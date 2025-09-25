@@ -21,14 +21,14 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <param name="email">Employee's email</param>
         /// <param name="pwd">Emplyee's password</param>
-        /// <returns></returns>
+        /// <returns>User token</returns>
         [HttpGet]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<string> Authenticate(string email, string pwd)
+        public async Task<IActionResult> Authenticate(string email, string pwd)
         {
             var result = await _authSvc.Authenticate(email, pwd);
-            return result;
+            return ReturnResponse(result);
         }
     }
 }

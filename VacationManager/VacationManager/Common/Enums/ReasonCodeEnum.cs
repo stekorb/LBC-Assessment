@@ -7,7 +7,7 @@ namespace VacationManager.Common.Enums
     /// </summary>
     public enum ReasonCodeEnum
     {
-        
+        UserNotFound = 100,
 
         #region Employee
         EmailNotUnique = 200,
