@@ -9,6 +9,7 @@ namespace VacationManager.Dto.Employee
         [Required]
         public Guid Id { get; set; }
         public string Name { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
         public string Email { get; set; }
         public RoleEnum Role { get; set; }

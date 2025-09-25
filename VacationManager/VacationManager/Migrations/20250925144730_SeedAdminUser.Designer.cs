@@ -11,8 +11,8 @@ using VacationManager.Data;
 namespace VacationManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250924190934_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250925144730_SeedAdminUser")]
+    partial class SeedAdminUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,16 @@ namespace VacationManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2f797cb5-157a-4569-91d8-e9d5164048e0"),
+                            Email = "admin@workflow.com",
+                            Name = "Administrator",
+                            Password = "AQAAAAIAAYagAAAAECLXxn5VxPYjvCLc6EUyvHJGS5wRYq3KxzCPP9t03tXF5xnUY9Wv8j4B7fpnEXjPKA==",
+                            Role = 0
+                        });
                 });
 
             modelBuilder.Entity("VacationManager.Models.VacationModel", b =>

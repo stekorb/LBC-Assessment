@@ -42,6 +42,11 @@ namespace VacationManager.Migrations
                 {
                     table.PrimaryKey("PK_Vacations", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Email", "ManagerId", "Name", "Password", "Role" },
+                values: new object[] { new Guid("2f797cb5-157a-4569-91d8-e9d5164048e0"), "admin@workflow.com", null, "Administrator", "AQAAAAIAAYagAAAAECLXxn5VxPYjvCLc6EUyvHJGS5wRYq3KxzCPP9t03tXF5xnUY9Wv8j4B7fpnEXjPKA==", 0 });
         }
 
         /// <inheritdoc />
