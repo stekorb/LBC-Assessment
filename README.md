@@ -13,7 +13,7 @@ Install instructions:
 
 ## Heads-up for testing
 
-1. All users are already registered on the database. They all have the password ```123456``` for simplicity of testing.
+1. All users are already registered on the database. They all have the password ```123456``` for the sake of simplicity of testing.
 2. There's a default administrator user with credentials ```admin@workflow.com``` and password ```admin```
 3. If for some reason the database is cleared or deleted, run the following commands in the PMC (Package Manager Console) in order:
 
