@@ -14,7 +14,16 @@ Install instructions:
 ## Heads-up for testing
 
 1. All users are already registered on the database. They all have the password ```123456``` for simplicity of testing.
-2. To authenticate, call the Authentication endpoint with the user and email.
+2. There's a default administrator user with credentials ```admin@workflow.com``` and password ```admin```
+3. If for some reason the database is cleared or deleted, run the following commands in order:
+
+      ```dotnet ef migrations add InitialCreate --project VacationManager```
+
+      ```dotnet ef migrations add SeedAdminUser --project VacationManager```
+
+      ```dotnet ef database update --project VacationManager```
+
+5. To authenticate, call the Authentication endpoint with the user and email.
    <img width="795" height="150" alt="image" src="https://github.com/user-attachments/assets/90ecee2e-6b1a-422e-b860-e1c1ec2fedc4" />
    
    It'll return the bearer token which have to be added in the authentication button at the top of the page.
