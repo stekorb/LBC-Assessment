@@ -6,6 +6,6 @@ namespace VacationManager.Services.Interfaces.Vacation
 {
     public interface IRetrieveVacationsAwaitingReviewSvc
     {
-        Task<ResponseModel<List<VacationDto>>> Execute(Guid managerId);
+        Task<ResponseModel<List<VacationDto>>> Execute();
     }
 }

@@ -27,9 +27,10 @@ namespace VacationManager.Repositories
             return result;
         }
 
-        public async Task<VacationModel> RetrieveVacationById(Guid vacationId)
+        public async Task<VacationModel> RetrieveVacationById(Guid vacationId, Guid? employeeId = null)
         {
             var result = await _dbContext.Vacations.FirstOrDefaultAsync(x => x.Id == vacationId);
+
             return result;
         }
 
@@ -88,12 +89,28 @@ namespace VacationManager.Repositories
             return false;
         }
 
+        public async Task<List<VacationModel>> RetrieveVacationsAwaitingReview()
+        {
+            var listDb = await _dbContext.Vacations.Where(v => v.Status == VacationStatusEnum.AwaitingApproval).ToListAsync();
+
+            return listDb;
+        }
+
         public async Task<List<VacationModel>> RetrieveVacationsAwaitingReview(Guid managerId)
         {
             var managedEmployeesIds = await _dbContext.Employees.Where(e => e.ManagerId == managerId).Select(e => e.Id).ToListAsync();
             var listDb = await _dbContext.Vacations.Where(v => v.Status == VacationStatusEnum.AwaitingApproval && managedEmployeesIds.Contains(v.Id)).ToListAsync();
 
             return listDb;
+        }
+
+        public async Task<bool> HasVacationAccess(Guid vacationId, Guid employeeId)
+        {
+            var vacationDb = await _dbContext.Vacations.FirstOrDefaultAsync(vac => vac.Id == vacationId);
+            var employeeList = await _dbContext.Employees.Where(emp => emp.Id == employeeId || emp.ManagerId == employeeId).ToListAsync();
+
+            bool hasAccess = vacationDb != null && employeeList != null && employeeList.Select(p => p.Id).Contains(vacationDb.EmployeeId);
+            return hasAccess;
         }
     }
 }

@@ -91,13 +91,13 @@ namespace VacationManager.Controllers
         /// </summary>
         /// <param name="managerId">The manager employee unique identifier</param>
         /// <returns></returns>
-        [HttpGet("review/{managerId}")]
+        [HttpGet("review")]
         [Authorize(Roles = $"{Roles.Manager},{Roles.Administrator}")]
         [ProducesResponseType(typeof(List<VacationDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetVacationsAwaitingReview(Guid managerId)
+        public async Task<IActionResult> GetVacationsAwaitingReview()
         {
-            var result = await _retrieveVacationsAwaitingReviewSvc.Execute(managerId);
+            var result = await _retrieveVacationsAwaitingReviewSvc.Execute();
             return ReturnResponse(result);
         }
 

@@ -7,15 +7,23 @@ namespace VacationManager.Common.Enums
     /// </summary>
     public enum ReasonCodeEnum
     {
+        
+
         #region Employee
-        EmailNotUnique = 100,
-        ManagerNotFound = 101,
-        EmployeeNotFound = 102,
+        EmailNotUnique = 200,
+        ManagerNotFound = 201,
+        EmployeeNotFound = 202,
         #endregion
 
         #region Vacation
-        VacationPeriodAlreadyBooked = 200,
-        VacationNotFound = 201
+        VacationPeriodAlreadyBooked = 300,
+        VacationNotFound = 301,
+        VacationNotUnderManagement = 302,
+        NotVacationOwner = 303,
+        NotAllowedToSeeEmployeeVacations = 304,
+        DoesNotHaveReviewPermission = 305,
+        DoesNotHaveEditPermission = 306, 
+        DoesNotHaveDeletePermission = 307
         #endregion
 
     }

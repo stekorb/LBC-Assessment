@@ -2,6 +2,7 @@
 using VacationManager.Common.Enums;
 using VacationManager.Common.Responses;
 using VacationManager.Repositories.Interfaces;
+using VacationManager.Services.Interfaces.Authentication;
 using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Services.Employee
@@ -9,10 +10,12 @@ namespace VacationManager.Services.Employee
     public class DeleteEmployeeSvc : BaseService, IDeleteEmployeeSvc
     {
         private readonly IEmployeeRepo _employeeRepo;
+        private readonly IUserContextSvc _userContext;
 
-        public DeleteEmployeeSvc(IEmployeeRepo employeeRepo, IMapper mapper) : base(mapper)
+        public DeleteEmployeeSvc(IEmployeeRepo employeeRepo, IUserContextSvc userContext, IMapper mapper) : base(mapper)
         {
             _employeeRepo = employeeRepo;
+            _userContext = userContext;
         }
 
         public async Task<ResponseModel<bool>> Execute(Guid employeeId)

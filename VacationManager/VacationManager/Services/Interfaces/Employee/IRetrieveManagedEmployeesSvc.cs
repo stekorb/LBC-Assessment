@@ -5,6 +5,6 @@ namespace VacationManager.Services.Interfaces.Employee
 {
     public interface IRetrieveManagedEmployeesSvc
     {
-        Task<ResponseModel<List<EmployeeDto>>> Execute(Guid managerId);
+        Task<ResponseModel<List<EmployeeDto>>> Execute();
     }
 }

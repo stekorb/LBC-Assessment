@@ -4,6 +4,7 @@ using VacationManager.Common.Responses;
 using VacationManager.Dto.Vacation;
 using VacationManager.Models;
 using VacationManager.Repositories.Interfaces;
+using VacationManager.Services.Interfaces.Authentication;
 using VacationManager.Services.Interfaces.Vacation;
 
 namespace VacationManager.Services.Vacation
@@ -11,10 +12,12 @@ namespace VacationManager.Services.Vacation
     public class RegisterNewVacationSvc : BaseService, IRegisterNewVacationSvc
     {
         private readonly IVacationRepo _vacationRepo;
+        private readonly IUserContextSvc _userContextSvc;
 
-        public RegisterNewVacationSvc(IVacationRepo vacationRepo, IMapper mapper) : base(mapper)
+        public RegisterNewVacationSvc(IVacationRepo vacationRepo, IUserContextSvc userContextSvc, IMapper mapper) : base(mapper)
         {
             _vacationRepo = vacationRepo;
+            _userContextSvc = userContextSvc;
         }
 
         public async Task<ResponseModel<bool>> Execute(VacationCreateDto dto)
@@ -29,6 +32,8 @@ namespace VacationManager.Services.Vacation
 
             var model = _mapper.Map<VacationModel>(dto);
             model.Status = VacationStatusEnum.AwaitingApproval;
+            model.EmployeeId = _userContextSvc.UserId;
+
             result.Result = await _vacationRepo.RegisterNewVacation(model);
             return result;
         }

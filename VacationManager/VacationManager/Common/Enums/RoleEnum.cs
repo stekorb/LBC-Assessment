@@ -9,8 +9,8 @@
 
     public static class Roles
     {
-        public const string Administrator = nameof(Administrator);
-        public const string Manager = nameof(Manager);
-        public const string Employee = nameof(Employee);
+        public const string Administrator = nameof(RoleEnum.Administrator);
+        public const string Manager = nameof(RoleEnum.Manager);
+        public const string Employee = nameof(RoleEnum.Employee);
     }
 }

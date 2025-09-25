@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using VacationManager.Common.Enums;
 using VacationManager.Common.Responses;
 using VacationManager.Dto.Employee;
+using VacationManager.Services.Interfaces.Authentication;
 using VacationManager.Services.Interfaces.Employee;
 
 namespace VacationManager.Controllers
@@ -18,6 +20,7 @@ namespace VacationManager.Controllers
         private readonly IUpdateEmployeeSvc _updateEmployeeSvc;
         private readonly IDeleteEmployeeSvc _deleteEmployeeSvc;
         private readonly IRetrieveManagedEmployeesSvc _retrieveManagedEmployeesSvc;
+        
         public EmployeeController(IRetrieveAllEmployeesSvc retrieveAllEmployeesSvc, 
                                   ICreateEmployeeSvc createEmployeeSvc,
                                   IUpdateEmployeeSvc updateEmployeeSvc,
@@ -31,32 +34,31 @@ namespace VacationManager.Controllers
             _retrieveManagedEmployeesSvc = retrieveManagedEmployeesSvc;
         }
 
-        /// <summary>
-        /// Retrieves all employees.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
-        [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> RetrieveAllEmployees()
-        {
-            var result = await _retrieveAllEmployeesSvc.Execute();
-            return ReturnResponse(result);
-        }
+        ///// <summary>
+        ///// Retrieves all employees.
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[Authorize(Roles = Roles.Administrator)]
+        //[ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
+        //[ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
+        //public async Task<IActionResult> RetrieveAllEmployees()
+        //{
+        //    var result = await _retrieveAllEmployeesSvc.Execute();
+        //    return ReturnResponse(result);
+        //}
 
         /// <summary>
-        /// Retrieves all employees under the manager's.
+        /// Retrieves all employees that can be managed by the user.
         /// </summary>
-        /// <param name="managerId">Manager's employee unique identifier</param>
         /// <returns></returns>
-        [HttpGet("management/{managerId}")]
+        [HttpGet("management")]
         [Authorize(Roles = $"{Roles.Manager}, {Roles.Administrator}")]
         [ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> RetrieveManagedEmployees(Guid managerId)
+        public async Task<IActionResult> RetrieveManagedEmployees()
         {
-            var result = await _retrieveManagedEmployeesSvc.Execute(managerId);
+            var result = await _retrieveManagedEmployeesSvc.Execute();
             return ReturnResponse(result);
         }
 

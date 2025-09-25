@@ -1,10 +1,14 @@
-﻿using VacationManager.Common.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using VacationManager.Common.Enums;
 
 namespace VacationManager.Dto.Vacation
 {
     public class VacationReviewDto
     {
-        public Guid Id { get; set; }
+        [Required]
+        public Guid VacationId { get; set; }
+
+        [Required]
         public VacationStatusEnum ManagerDecision { get; set; }
     }
 }

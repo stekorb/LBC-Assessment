@@ -89,7 +89,7 @@ namespace VacationManager.Repositories
 
         public async Task<List<EmployeeModel>> RetrieveManagedEmployees(Guid managerId)
         {
-            return await _dbContext.Employees.Where(emp => emp.ManagerId == managerId).ToListAsync();
+            return await _dbContext.Employees.Where(emp => emp.ManagerId == managerId || emp.Id == managerId).ToListAsync();
         }
     }
 }
