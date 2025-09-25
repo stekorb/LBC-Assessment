@@ -34,20 +34,6 @@ namespace VacationManager.Controllers
             _retrieveManagedEmployeesSvc = retrieveManagedEmployeesSvc;
         }
 
-        ///// <summary>
-        ///// Retrieves all employees.
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[Authorize(Roles = Roles.Administrator)]
-        //[ProducesResponseType(typeof(List<List<EmployeeDto>>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(List<ErrorResponseModel>), (int)HttpStatusCode.BadRequest)]
-        //public async Task<IActionResult> RetrieveAllEmployees()
-        //{
-        //    var result = await _retrieveAllEmployeesSvc.Execute();
-        //    return ReturnResponse(result);
-        //}
-
         /// <summary>
         /// Retrieves all employees that can be managed by the user.
         /// </summary>
